@@ -1,9 +1,9 @@
-from FlightRadar24 import FlightRadar24API,Countries
+from FlightRadar24 import FlightRadar24API, Countries
 import time
-from rbgmatrix import RGBMatrix, RBGMatrixOptions, graphics
+from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 
 # rbg options
-options = RBGMatrixOptions()
+options = RGBMatrixOptions()
 options.chain_length = 1
 options.cols = 64
 options.rows = 32
@@ -35,7 +35,7 @@ flights =  fr_api.get_flights()
 x = 0
 for flight in flights:
     x += 1
-   #print(flight.number,flight.origin_airport_iata,flight.destination_airport_iata)
+    print(flight.number,flight.origin_airport_iata,flight.destination_airport_iata)
     #create canvas with text
     canvas = matrix.CreateFrameCanvas()
     graphics.DrawText(canvas, font, 15, 15, textColor, flight.origin_airport_iata)
@@ -44,6 +44,7 @@ for flight in flights:
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
     time.sleep(5)
+    matrix.Clear()
     if x > 20 :
         break
 
