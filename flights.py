@@ -30,7 +30,6 @@ font = graphics.Font()
 font.LoadFont("./fonts/7x13.bdf")
 textColor = graphics.Color(175, 175, 0)
 fr_api = FlightRadar24API()
-
 flights =  fr_api.get_flights()
 x = 0
 for flight in flights:
@@ -39,7 +38,7 @@ for flight in flights:
     #create canvas with text
     canvas = matrix.CreateFrameCanvas()
     graphics.DrawText(canvas, font, 15, 15, textColor, flight.origin_airport_iata)
-    graphics.DrawText(canvas, font, 15, 25, textColor, flight.destination_airport_iata)
+    graphics.DrawText(canvas, font, 25, 15, textColor, flight.destination_airport_iata)
 
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
