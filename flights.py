@@ -37,8 +37,8 @@ for flight in flights:
     print(flight.number,flight.origin_airport_iata,flight.destination_airport_iata)
     #create canvas with text
     canvas = matrix.CreateFrameCanvas()
-    graphics.DrawText(canvas, font, 15, 15, textColor, flight.origin_airport_iata)
-    graphics.DrawText(canvas, font, 25, 15, textColor, flight.destination_airport_iata)
+    graphics.DrawText(canvas, font, 10, 15, textColor, flight.origin_airport_iata)
+    graphics.DrawText(canvas, font, 35, 15, textColor, flight.destination_airport_iata)
 
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
