@@ -29,16 +29,31 @@ matrix = RGBMatrix(options = options)
 font = graphics.Font()
 font.LoadFont("./fonts/7x13.bdf")
 textColor = graphics.Color(175, 175, 0)
+
+
 fr_api = FlightRadar24API()
 flights =  fr_api.get_flights()
+#airports = fr_api.get_airports(COUNTRIES)
+
+
 x = 0
-for flight in flights:
+for f in flights:
+    #d=fr_api.get_flight_details (f)
+    #for a in airports:
+    #  if a.iata == f.destination_airport_iata:
+             #print(a.name,a.iata,a.icao,a.latitude,a.longitude)
+    #         ar = a
+    #distance=f.get_distance_from (f.destination_airport_iata)
+    #d=fr_api.get_flight_details (f)
     x += 1
-    print(flight.number,flight.origin_airport_iata,flight.destination_airport_iata)
+    print(f.number,f.origin_airport_iata,f.destination_airport_iata,f.altitude)
+    
     #create canvas with text
     canvas = matrix.CreateFrameCanvas()
-    graphics.DrawText(canvas, font, 10, 15, textColor, flight.origin_airport_iata)
-    graphics.DrawText(canvas, font, 35, 15, textColor, flight.destination_airport_iata)
+    graphics.DrawText(canvas, font, 10, 10, textColor, f.origin_airport_iata)
+    graphics.DrawText(canvas, font, 35, 10, textColor, f.destination_airport_iata)
+    graphics.DrawText(canvas, font, 10, 30, textColor, f.number)
+    #graphics.DrawText(canvas, font, 35, 30, textColor, f.aircraft_model)
 
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
