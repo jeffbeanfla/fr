@@ -50,10 +50,10 @@ for f in flights:
     
     #create canvas with text
     canvas = matrix.CreateFrameCanvas()
-    graphics.DrawText(canvas, font, 10, 10, textColor, f.origin_airport_iata)
+    graphics.DrawText(canvas, font, 1, 10, textColor, f.origin_airport_iata)
     graphics.DrawText(canvas, font, 35, 10, textColor, f.destination_airport_iata)
-    graphics.DrawText(canvas, font, 10, 30, textColor, f.number)
-    #graphics.DrawText(canvas, font, 35, 30, textColor, f.aircraft_model)
+    graphics.DrawText(canvas, font, 1, 30, textColor, f.number)
+    graphics.DrawText(canvas, font, 35, 30, textColor, str(f.altitude))
 
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
