@@ -21,7 +21,11 @@ bounds=fr_api.get_bounds_by_point(25.795160,-80.279594,1000000)
 #bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,100000)  FLL
 #time_left==0
 #ft==0
+
+
+
 flights=fr_api.get_flights(bounds = bounds)
+x = 0
 for flight in flights:
     
 #   if flight.number == "DL188":
@@ -42,7 +46,9 @@ for flight in flights:
     ft=ct.strftime('%M:%S')
     
     #if f.destination_airport_name == 'Miami International Airport' and operator.gt(distance,5):
-    if f.destination_airport_iata == 'MIA' and operator.gt(distance,5): 
+    if f.destination_airport_iata == 'MIA' and operator.gt(distance,5):
+            x += 1
             print(f.number, f.origin_airport_iata,f.destination_airport_iata,distance, f.altitude,f.ground_speed,f.aircraft_model,minutes,ft)
-            
-
+    #x =  x + 1     
+    if x > 20 :
+                break
