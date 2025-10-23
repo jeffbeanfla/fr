@@ -28,8 +28,9 @@ matrix = RGBMatrix(options = options)
 #create font
 font = graphics.Font()
 font.LoadFont("./fonts/7x13.bdf")
-textColor = graphics.Color(175, 175, 0)
-
+font.LoadFont("./fonts/6x10.bdf")
+textColor1 = graphics.Color(0, 0, 255)
+textColor2 = graphics.Color(255, 0, 0)
 
 fr_api = FlightRadar24API()
 flights =  fr_api.get_flights()
@@ -47,14 +48,14 @@ for f in flights:
  
         if f.origin_airport_iata and f.altitude > 0:
             x += 1
-            print(f.number,f.origin_airport_iata,f.destination_airport_iata,f.altitude,x)
+            print(f.number,f.origin_airport_iata,f.destination_airport_iata,f.altitude)
         
             #create canvas with text
             canvas = matrix.CreateFrameCanvas()
-            graphics.DrawText(canvas, font, 1, 10, textColor, f.origin_airport_iata)
-            graphics.DrawText(canvas, font, 35, 10, textColor, f.destination_airport_iata)
-            graphics.DrawText(canvas, font, 1, 30, textColor, f.number)
-            graphics.DrawText(canvas, font, 35, 30, textColor, str(f.altitude))
+            graphics.DrawText(canvas, font, 1, 10, textColor1, f.origin_airport_iata)
+            graphics.DrawText(canvas, font, 35, 10, textColor1, f.destination_airport_iata)
+            graphics.DrawText(canvas, font, 1, 30, textColor2, f.number)
+            graphics.DrawText(canvas, font, 35, 30, textColor2, str(f.altitude))
 
             matrix.Clear()
             matrix.SwapOnVSync(canvas)
