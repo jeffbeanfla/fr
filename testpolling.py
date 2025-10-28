@@ -37,38 +37,32 @@ textColor2 = graphics.Color(255, 0, 0)
 
 fr_api = FlightRadar24API()
 flights =  fr_api.get_flights()
-#airports = fr_api.get_airports([Countries.UNITED_STATES])
+
+airports = fr_api.get_airports([Countries.UNITED_STATES])
 
 '''
-x = 0
-for f in flights:
-    #d=fr_api.get_flight_details (f)
-    #for a in airports:
-    #  if a.iata == f.destination_airport_iata:
-             #print(a.name,a.iata,a.icao,a.latitude,a.longitude)
-    #         ar = a
-    #distance=f.get_distance_from (f.destination_airport_iata)
- 
-        if f.origin_airport_iata and f.altitude > 0:
-            x += 1
-            print(f.number,f.origin_airport_iata,f.destination_airport_iata,f.altitude)
- '''
-airports = fr_api.get_airports([Countries.UNITED_STATES])
+#MIA
+bounds=fr_api.get_bounds_by_point(25.7,-80.50,100000)
+min_lat=25.70
+max_lat=26.00
+min_lon=-80.25
+max_lon=-80.60
 
 for a in airports:
       if a.iata == 'MIA':
-#             #print(a.name,a.iata,a.icao,a.latitude,a.longitude)
-             ar = a
-             
-bounds=fr_api.get_bounds_by_point(25.7,-80.50,100000)
-#bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,100000)  #FLL
-#time_left==0
-#ft==0
+         ar = a
 
-min_lat=25.70#26.00
-max_lat=26.00#26.20
-min_lon=-80.25#-79.00
-max_lon=-80.60#-80.60
+'''
+#FLL
+bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,100000)
+min_lat=25.90
+max_lat=26.20
+min_lon=-80.00
+max_lon=-80.60
+
+for a in airports:
+      if a.iata == 'FLL':
+         ar = a
 
 flights=fr_api.get_flights(bounds = bounds)
 x = 0
@@ -80,7 +74,7 @@ for flight in flights:
     distance=f.get_distance_from (ar)
     f.set_flight_details(d)
      
-    #time_left=time.time()-f.time
+
 
     try:
         minutes=(distance/f.ground_speed)*60
@@ -91,11 +85,11 @@ for flight in flights:
     ct=datetime.fromtimestamp(minutes)
     ft=ct.strftime('%M:%S')
 
-    if f.destination_airport_iata == 'MIA' and f.altitude > 50  and min_lat<= f.latitude <=max_lat and min_lon>=f.longitude >=max_lon:
+    if f.destination_airport_iata == ar.iata and f.altitude > 50  and min_lat<= f.latitude <=max_lat and min_lon>=f.longitude >=max_lon:
             x += 1
             print("FlightNo",f.number, "From",f.origin_airport_iata,"To",f.destination_airport_iata, "Alt",f.altitude,"Speed",f.ground_speed,"Dist", distance,"Type",f.aircraft_model,f.latitude, f.longitude)
-            #if min_lat<= f.latitude <=max_lat and min_lon>=f.longitude >=max_lon:
-                #print("Y")
+        
+           
 
 
             #create canvas with text
