@@ -31,21 +31,18 @@ matrix = RGBMatrix(options=options)
 
 # set max duration and text
 duration = datetime.now() + timedelta(seconds=30)
-text = 'Hello world from RGB Matrix LED'
+text = "" #Hello world from RGB Matrix LED
 
 # create font
 font = graphics.Font()
 font.LoadFont("./fonts/9x15.bdf")
-fontcolor = graphics.Color(250, 250, 250)
+fontcolor = graphics.Color(255, 0, 0)
 
 # create canvas
 canvas = matrix.CreateFrameCanvas()
 
 # get canvas position
 canvas_pos = canvas.width
-
-
-
 
 
 while True:
@@ -95,12 +92,13 @@ for flight in flights:
          
     # get length of text
     text_len = graphics.DrawText(canvas, font, canvas_pos, 20, fontcolor, text)
+    scroll_delay = .001
     # change position
     canvas_pos -= 1
     if (canvas_pos + text_len) < 0:
         canvas_pos = canvas.width
     # show on matrix
-    time.sleep(0.05)
+    time.sleep(0.10)
     matrix.Clear()
     canvas = matrix.SwapOnVSync(canvas)
 
