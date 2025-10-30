@@ -89,7 +89,7 @@ for flight in flights:
             x += 1
             print("FlightNo",f.number, "From",f.origin_airport_iata,"To",f.destination_airport_iata, "Alt",f.altitude,"Speed",f.ground_speed,"Dist", distance,"Type",f.aircraft_model,f.latitude, f.longitude)
             text=f.number + " "  + f.origin_airport_iata #, f.altitude, f.ground_speed,distance, f.aircraft_model
-    scroll_delay = 1     
+    scroll_delay = 5     
     # get length of text
     text_len = graphics.DrawText(canvas, font, canvas_pos, 20, fontcolor, text)
     
@@ -98,7 +98,7 @@ for flight in flights:
     if (canvas_pos + text_len) < 0:
         canvas_pos = canvas.width
     # show on matrix
-    time.sleep(scroll_delay/100000.0)
+    time.sleep(scroll_delay/1000.0)
     matrix.Clear()
     canvas = matrix.SwapOnVSync(canvas)
 
