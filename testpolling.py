@@ -40,27 +40,30 @@ flights =  fr_api.get_flights()
 
 airports = fr_api.get_airports([Countries.UNITED_STATES])
 
-'''
-#MIA
-bounds=fr_api.get_bounds_by_point(25.7,-80.50,100000)
-min_lat=25.70
-max_lat=26.00
-min_lon=-80.25
-max_lon=-80.60
+ap = "FLL"
 
-for a in airports:
-      if a.iata == 'MIA':
+match ap:
+
+ case "MIA":
+
+    bounds=fr_api.get_bounds_by_point(25.7,-80.50,100000)
+    min_lat=25.70
+    max_lat=26.00
+    min_lon=-80.25
+    max_lon=-80.60
+
+    for a in airports:
+      if a.iata == ap:
          ar = a
+ case "FLL":
 
-'''
-#FLL
-bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,100000)
-min_lat=25.90
-max_lat=26.20
-min_lon=-80.00
-max_lon=-80.60
+    bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,100000)
+    min_lat=25.90
+    max_lat=26.20
+    min_lon=-80.00
+    max_lon=-80.60
 
-for a in airports:
+    for a in airports:
       if a.iata == 'FLL':
          ar = a
 
