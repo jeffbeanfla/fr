@@ -35,10 +35,10 @@ font.LoadFont("./fonts/6x10.bdf")
 textColor1 = graphics.Color(0, 0, 255)
 textColor2 = graphics.Color(255, 0, 0)
 
+start_time=time.time()
+
 fr_api = FlightRadar24API()
 flights =  fr_api.get_flights()
-
-airports = fr_api.get_airports([Countries.UNITED_STATES])
 
 ap = "FLL"
 
@@ -51,21 +51,16 @@ match ap:
     max_lat=26.00
     min_lon=-80.25
     max_lon=-80.60
+    ar = fr_api.get_airport(ap) 
 
-    for a in airports:
-      if a.iata == ap:
-         ar = a
  case "FLL":
 
     bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,100000)
     min_lat=25.90
     max_lat=26.20
     min_lon=-80.00
-    max_lon=-80.60
-
-    for a in airports:
-      if a.iata == 'FLL':
-         ar = a
+    max_lon=-80.60     
+    ar = fr_api.get_airport(ap)
 
 flights=fr_api.get_flights(bounds = bounds)
 x = 0
@@ -77,8 +72,6 @@ for flight in flights:
     distance=f.get_distance_from (ar)
     f.set_flight_details(d)
      
-
-
     try:
         minutes=(distance/f.ground_speed)*60
         tt=(distance/f.ground_speed)
@@ -91,10 +84,7 @@ for flight in flights:
     if f.destination_airport_iata == ar.iata and f.altitude > 50  and min_lat<= f.latitude <=max_lat and min_lon>=f.longitude >=max_lon:
             x += 1
             print("FlightNo",f.number, "From",f.origin_airport_iata,"To",f.destination_airport_iata, "Alt",f.altitude,"Speed",f.ground_speed,"Dist", distance,"Type",f.aircraft_model,f.latitude, f.longitude)
-        
-           
-
-
+                
             #create canvas with text
             canvas = matrix.CreateFrameCanvas()
             graphics.DrawText(canvas, font, 1, 10, textColor1, f.origin_airport_iata)
@@ -108,3 +98,5 @@ for flight in flights:
             matrix.Clear()
             if x > 20 :
                 break
+end_time=time.time()
+print(end_time-start_time)
