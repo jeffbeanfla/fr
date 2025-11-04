@@ -40,22 +40,22 @@ start_time=time.time()
 fr_api = FlightRadar24API()
 flights =  fr_api.get_flights()
 
-ap = "FLL"
+ap = "MIA"
 
 match ap:
 
  case "MIA":
 
-    bounds=fr_api.get_bounds_by_point(25.7,-80.50,100000)
+    bounds=fr_api.get_bounds_by_point(25.7,-80.50,10000)
     min_lat=25.70
     max_lat=26.00
     min_lon=-80.25
-    max_lon=-80.60
+    max_lon=-80.60    
     ar = fr_api.get_airport(ap) 
 
  case "FLL":
 
-    bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,100000)
+    bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,10000)
     min_lat=25.90
     max_lat=26.20
     min_lon=-80.00
@@ -72,16 +72,16 @@ for flight in flights:
     distance=f.get_distance_from (ar)
     f.set_flight_details(d)
      
-    try:
-        minutes=(distance/f.ground_speed)*60
-        tt=(distance/f.ground_speed)
-    except:
-        result=0 
+    #try:
+    #    minutes=(distance/f.ground_speed)*60
+    #    tt=(distance/f.ground_speed)
+    #except:
+    #    result=0 
         
-    ct=datetime.fromtimestamp(minutes)
-    ft=ct.strftime('%M:%S')
+    #ct=datetime.fromtimestamp(minutes)
+    #ft=ct.strftime('%M:%S')
 
-    if f.destination_airport_iata == ar.iata and f.altitude > 50  and min_lat<= f.latitude <=max_lat and min_lon>=f.longitude >=max_lon:
+    if f.destination_airport_iata == ar.iata and f.altitude > 50: #  and min_lat<= f.latitude <=max_lat and min_lon>=f.longitude >=max_lon:
             x += 1
             print("FlightNo",f.number, "From",f.origin_airport_iata,"To",f.destination_airport_iata, "Alt",f.altitude,"Speed",f.ground_speed,"Dist", distance,"Type",f.aircraft_model,f.latitude, f.longitude)
                 
