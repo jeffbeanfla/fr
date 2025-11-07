@@ -59,6 +59,12 @@ async def main():
         str=date.today()
         dstr=str.isoformat()
         
+        str=f"{weather.kind}"
+        dstr=str
+        
+        str=f"{weather.temperature}"
+        dstr=str
+        
         canvas = matrix.CreateFrameCanvas()
         graphics.DrawText(canvas, font, 1, 10, textColor1, dstr)
         
@@ -72,4 +78,3 @@ async def main():
     matrix.Clear()
     
 asyncio.run(main())
-
