@@ -40,8 +40,8 @@ matrix = RGBMatrix(options = options)
 
 #create font
 font = graphics.Font()
-font.LoadFont("./fonts/7x13.bdf")
-font.LoadFont("./fonts/6x10.bdf")
+#font.LoadFont("./fonts/7x13.bdf")
+font.LoadFont("./fonts/5x8.bdf")
 textColor1 = graphics.Color(0, 0, 255)
 textColor2 = graphics.Color(255, 0, 0)
 
@@ -50,27 +50,26 @@ async def main():
         weather = await client.get('Fort Lauderdale')
         #now=time.localtime()
         now=datetime.now()
-        ftoday= now.strftime("%H:%M:%S")
+        ftoday= now.strftime("%-I:%M:%S%p")
+        
         print ("Today:",date.today(),"At:",ftoday ,"Temp:", weather.temperature,  "Outlook: ", weather.kind)
         
-        str=ftoday
-        dstr=str
-        
+        ti=ftoday
+         
         str=date.today()
-        dstr=str.isoformat()
+        d=str.isoformat()
+        d=str.strftime("%m/%d/%y")
+        k=f"{weather.kind}"
         
-        str=f"{weather.kind}"
-        dstr=str
         
-        str=f"{weather.temperature}"
-        dstr=str
+        te=f"{weather.temperature}"
+        
+        dstr=ti #+ d + k + te
         
         canvas = matrix.CreateFrameCanvas()
-        graphics.DrawText(canvas, font, 1, 10, textColor1, dstr)
-        
-#graphics.DrawText(canvas, font, 25, 10, textColor1, f.number)
-#graphics.DrawText(canvas, font, 1, 20, textColor2, "Speed " + str(f.ground_speed))
-#graphics.DrawText(canvas, font, 1, 30, textColor2, "Alt " + str(f.altitude))
+        graphics.DrawText(canvas, font, 1, 10, textColor1, d +" " + te)     
+        graphics.DrawText(canvas, font, 1, 20, textColor2, ti)
+        graphics.DrawText(canvas, font, 1, 30, textColor2, k)
 
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
