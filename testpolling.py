@@ -35,13 +35,14 @@ while True:
     font.LoadFont("./fonts/6x10.bdf")
     textColor1 = graphics.Color(0, 0, 255)
     textColor2 = graphics.Color(255, 0, 0)
-
+    textColor3 = graphics.Color(0,255,0)
+    
     start_time=time.time()
 
     fr_api = FlightRadar24API()
     flights =  fr_api.get_flights()
 
-    ap = "MIA"
+    ap = "FLL"
 
     match ap:
 
@@ -91,7 +92,7 @@ while True:
                 graphics.DrawText(canvas, font, 1, 10, textColor1, f.origin_airport_iata)
                 graphics.DrawText(canvas, font, 25, 10, textColor1, f.number)
                 graphics.DrawText(canvas, font, 1, 20, textColor2, "Speed " + str(f.ground_speed))
-                graphics.DrawText(canvas, font, 1, 30, textColor2, "Alt " + str(f.altitude))
+                graphics.DrawText(canvas, font, 1, 30, textColor3, "Alt " + str(f.altitude))
 
                 matrix.Clear()
                 matrix.SwapOnVSync(canvas)

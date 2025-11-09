@@ -41,16 +41,18 @@ matrix = RGBMatrix(options = options)
 #create font
 font = graphics.Font()
 #font.LoadFont("./fonts/7x13.bdf")
-font.LoadFont("./fonts/4x6.bdf")
+font.LoadFont("./fonts/5x8.bdf")
+font2 = graphics.Font()
+font2.LoadFont("./fonts/4x6.bdf")
 textColor1 = graphics.Color(0, 0, 255)
 textColor2 = graphics.Color(255, 0, 0)
-
+textColor3 = graphics.Color(0,255,0)
 async def main():
     async with python_weather.Client(unit=python_weather.IMPERIAL) as client:
         weather = await client.get('Fort Lauderdale')
         #now=time.localtime()
         now=datetime.now()
-        ftoday= now.strftime("%-I:%M:%S%p")
+        ftoday= now.strftime("%-I:%M%p")
         
         print ("Today:",date.today(),"At:",ftoday ,"Temp:", weather.temperature,  "Outlook: ", weather.kind)
         
@@ -60,16 +62,14 @@ async def main():
         d=str.isoformat()
         d=str.strftime("%m/%d/%y")
         k=f"{weather.kind}"
-        
+        dd=str.strftime('%a')
         
         te=f"{weather.temperature}"
-        
-        dstr=ti #+ d + k + te
-        
+          
         canvas = matrix.CreateFrameCanvas()
-        graphics.DrawText(canvas, font, 1, 10, textColor1, d +" " + te)     
-        graphics.DrawText(canvas, font, 1, 20, textColor2, ti)
-        graphics.DrawText(canvas, font, 1, 30, textColor2, k)
+        graphics.DrawText(canvas, font, 1, 10, textColor1, d + ' ' + dd)     
+        graphics.DrawText(canvas, font, 1, 20, textColor2, ti + ' ' + te)
+        graphics.DrawText(canvas, font2, 1, 30, textColor3, k)
 
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
