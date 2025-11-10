@@ -63,9 +63,12 @@ async def main():
         d=str.strftime("%m/%d/%y")
         k=f"{weather.kind}"
         dd=str.strftime('%a')
+        deg_sym = "\u00b0"
         
-        te=f"{weather.temperature}"
-          
+        te=f"{weather.temperature}{deg_sym}"
+        
+        
+        
         canvas = matrix.CreateFrameCanvas()
         graphics.DrawText(canvas, font, 1, 10, textColor1, d + ' ' + dd)     
         graphics.DrawText(canvas, font, 1, 20, textColor2, ti + ' ' + te)
