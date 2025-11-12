@@ -1,3 +1,12 @@
+import time
+import datetime
+from datetime import date
+from datetime import datetime
+import python_weather
+
+import asyncio
+import os
+
 from FlightRadar24 import FlightRadar24API, Countries
 import time
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
@@ -5,9 +14,6 @@ import operator
 from datetime import datetime
 import requests
 
-import python_weather
-import asyncio
-import os
 # rbg options
 options = RGBMatrixOptions()
 options.chain_length = 1
@@ -35,73 +41,73 @@ matrix = RGBMatrix(options = options)
 font = graphics.Font()
 font.LoadFont("./fonts/7x13.bdf")
 font.LoadFont("./fonts/6x10.bdf")
+font5 = graphics.Font()
+font5.LoadFont("./fonts/5x8.bdf")
+font4 = graphics.Font()
+font4.LoadFont("./fonts/4x6.bdf")
+
 textColor1 = graphics.Color(0, 0, 255)
 textColor2 = graphics.Color(255, 0, 0)
 textColor3 = graphics.Color(0,255,0)
 
+async def main():
+    async with python_weather.Client(unit=python_weather.IMPERIAL) as client:
+        weather = await client.get('Fort Lauderdale')
+        #now=time.localtime()
+        now=datetime.now()
+        ftoday= now.strftime("%-I:%M%p")
+        
+        print ("Today:",date.today(),"At:",ftoday ,"Temp:", weather.temperature,  "Outlook: ", weather.kind)
+        
+        ti=ftoday
+         
+        str=date.today()
+        d=str.isoformat()
+        d=str.strftime("%m/%d/%y")
+        k=f"{weather.kind}"
+        dd=str.strftime('%a')
+        deg_sym = "\u00b0"
+        
+        te=f"{weather.temperature}{deg_sym}"
+        
+        
+        
+        canvas = matrix.CreateFrameCanvas()
+        graphics.DrawText(canvas, font5, 1, 10, textColor1, d + ' ' + dd)     
+        graphics.DrawText(canvas, font5, 1, 20, textColor2, ti + ' ' + te)
+        graphics.DrawText(canvas, font4, 1, 30, textColor3, k)
+
+    matrix.Clear()
+    matrix.SwapOnVSync(canvas)
+    time.sleep(5)
+    matrix.Clear()
+    
+asyncio.run(main())
 
 
 while True:
-
-    
-    
-    async def main():
-        async with python_weather.Client(unit=python_weather.IMPERIAL) as client:
-            weather = await client.get('Fort Lauderdale')
-            #now=time.localtime()
-            now=datetime.now()
-            ftoday= now.strftime("%-I:%M%p")
-        
-            print ("Today:",date.today(),"At:",ftoday ,"Temp:", weather.temperature,  "Outlook: ", weather.kind)
-        
-            ti=ftoday
-         
-            str=date.today()
-            d=str.isoformat()
-            d=str.strftime("%m/%d/%y")
-            k=f"{weather.kind}"
-            dd=str.strftime('%a')
-            deg_sym = "\u00b0"
-        
-            te=f"{weather.temperature}{deg_sym}"
-        
-        
-        
-            canvas = matrix.CreateFrameCanvas()
-            graphics.DrawText(canvas, font, 1, 10, textColor1, d + ' ' + dd)     
-            graphics.DrawText(canvas, font, 1, 20, textColor2, ti + ' ' + te)
-            graphics.DrawText(canvas, font2, 1, 30, textColor3, k)
-
-            matrix.Clear()
-            matrix.SwapOnVSync(canvas)
-            time.sleep(5)
-            atrix.Clear()
-    
-        asyncio.run(main())
-    
-    
     
     start_time=time.time()
 
     fr_api = FlightRadar24API()
     flights =  fr_api.get_flights()
 
-    ap = "FLL"
+    ap = "MIA"
 
     match ap:
 
      case "MIA":
 
-        bounds=fr_api.get_bounds_by_point(25.7,-80.50,10000)
-        min_lat=25.70
-        max_lat=26.00
+        bounds=fr_api.get_bounds_by_point(25.7,-80.50,30000)
+        min_lat=25.60
+        max_lat=26.10
         min_lon=-80.25
         max_lon=-80.60    
         ar = fr_api.get_airport(ap) 
 
      case "FLL":
 
-        bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,10000)
+        bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,30000)
         min_lat=25.90
         max_lat=26.20
         min_lon=-80.00
@@ -126,7 +132,7 @@ while True:
             
         #ct=datetime.fromtimestamp(minutes)
         #ft=ct.strftime('%M:%S')
-
+        
         if f.destination_airport_iata == ar.iata and f.altitude > 50: #  and min_lat<= f.latitude <=max_lat and min_lon>=f.longitude >=max_lon:
                 x += 1
                 print("FlightNo",f.number, "From",f.origin_airport_iata,"To",f.destination_airport_iata, "Alt",f.altitude,"Speed",f.ground_speed,"Dist", distance,"Type",f.aircraft_model,f.latitude, f.longitude)
