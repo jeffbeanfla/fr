@@ -48,7 +48,7 @@ while True:
 
      case "MIA":
 
-        bounds=fr_api.get_bounds_by_point(25.7,-80.50,10000)
+        bounds=fr_api.get_bounds_by_point(25.7,-80.50,20000)
         min_lat=25.70
         max_lat=26.00
         min_lon=-80.25
@@ -57,7 +57,7 @@ while True:
 
      case "FLL":
 
-        bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,10000)
+        bounds=fr_api.get_bounds_by_point(26.07365,-80.15153,20000)
         min_lat=25.90
         max_lat=26.20
         min_lon=-80.00

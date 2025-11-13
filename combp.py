@@ -80,7 +80,7 @@ async def main():
     matrix.Clear()
     matrix.SwapOnVSync(canvas)
     time.sleep(5)
-    matrix.Clear()
+    #matrix.Clear()
     
 asyncio.run(main())
 
