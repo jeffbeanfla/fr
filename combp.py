@@ -155,36 +155,46 @@ while True:
                 async def main():
                     async with python_weather.Client(unit=python_weather.IMPERIAL) as client:
                         weather = await client.get('Fort Lauderdale')
-        #now=time.localtime()
+                        #now=time.localtime()
                         now=datetime.now()
                         ftoday= now.strftime("%-I:%M%p")
-        
+                        
                         print ("Today:",date.today(),"At:",ftoday ,"Temp:", weather.temperature,  "Outlook: ", weather.kind)
-        
+                        
                         ti=ftoday
-         
+                         
                         str=date.today()
                         d=str.isoformat()
                         d=str.strftime("%m/%d/%y")
                         k=f"{weather.kind}"
                         dd=str.strftime('%a')
                         deg_sym = "\u00b0"
-        
+                        
                         te=f"{weather.temperature}{deg_sym}"
-        
-        
-        
+                        
+                        
+                        
                         canvas = matrix.CreateFrameCanvas()
                         graphics.DrawText(canvas, font5, 1, 10, textColor1, d + ' ' + dd)     
                         graphics.DrawText(canvas, font5, 1, 20, textColor2, ti + ' ' + te)
                         graphics.DrawText(canvas, font4, 1, 30, textColor3, k)
 
-                        mtrix.Clear()
-                        matrix.SwapOnVSync(canvas)
-                        time.sleep(5)
-                        #matrix.Clear()
-    
-                        asyncio.run(main())
+                    matrix.Clear()
+                    matrix.SwapOnVSync(canvas)
+                    time.sleep(5)
+                    #matrix.Clear()
+                    
+                asyncio.run(main())
+#                 canvas = matrix.CreateFrameCanvas()
+#                 graphics.DrawText(canvas, font5, 1, 10, textColor1, d + ' ' + dd)     
+#                 graphics.DrawText(canvas, font5, 1, 20, textColor2, ti + ' ' + te)
+#                 graphics.DrawText(canvas, font4, 1, 30, textColor3, k)
+# 
+#                 matrix.Clear()
+#                 matrix.SwapOnVSync(canvas)
+#                 time.sleep(5)
+                #matrix.Clear()
+
                 
                 if x > 20 :
                     break
